@@ -3,14 +3,14 @@ if(process.env.NODE_ENV !="production"){
 }
 
 
-
 const express = require("express");
 const app = express();
 const mongoose=require("mongoose");
 
 const path =require("path");
 const methodOverride = require("method-override");
-const url="mongodb://127.0.0.1:27017/wanderlust";
+// const url="mongodb://127.0.0.1:27017/wanderlust";
+const dbUrl = process.env.ATLASDB_URL;
 const ejsMate =require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError =require("./utils/ExpressError");
@@ -26,7 +26,7 @@ const reviewRouter= require("./routes/review.js");
 app.locals.mapToken = process.env.MAP_TOKEN;
 
 const sessionOptions ={
-    secret:"mysupersecretcode",
+    secret:process.env.SECRET,
     resave:false,
     saveUninitialized:true,
     cookie:{
@@ -53,13 +53,13 @@ res.locals.error=req.flash("error");
 res.locals.currUser =req.user;
 next();
 });
-app.get("/",(req,res)=>{
-    res.send("hi i am the route");
-});
+// app.get("/",(req,res)=>{
+//     res.send("hi i am the route");
+// });
 
 
 async function main(){
-    await mongoose.connect(url);
+    await mongoose.connect(dbUrl);
 };
 main().then((res)=>{
     console.log("connected to mongodb");

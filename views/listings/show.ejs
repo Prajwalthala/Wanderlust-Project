@@ -1,4 +1,8 @@
 <% layout("/layouts/boilerplate") %>
+<script>const mapToken = "<%= process.env.MAP_TOKEN %>";
+    const coordinates =  JSON.stringify(listing.geometry.coordinates) 
+</script>
+    
 <body>
     <div class="row mt-3">
     <div class="col-8 offset-3">
@@ -31,7 +35,7 @@
     </form>
     </div>
 <% } %>
-<div id="map"></div>
+
 
     <hr>
     <div class="col-8 offset-3">
@@ -101,30 +105,11 @@
         <h3>Where you'll be</h3>
         <div id="map"></div>
         </div>
-        <script>
-const mapToken = "<%= process.env.MAP_TOKEN %>";
-console.log(mapToken);
-
-mapboxgl.accessToken = mapToken;
-
-const map = new mapboxgl.Map({
-  container: "map",
-  style: "mapbox://styles/mapbox/streets-v12",
-  center: [-74.5, 40],
-  zoom: 9
-});
-</script>
+        
         
 </div>
 
     
-<!-- map.addControl(new mapboxgl.NavigationControl());
-    map.scrollZoom.disable();
-
-    map.on('style.load', () => {
-        map.setFog({}); // Set the default atmosphere style
-    }); -->
-
-
+<script src="/js/map.js"></script>
 
     
